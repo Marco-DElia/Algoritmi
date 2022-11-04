@@ -147,13 +147,13 @@ void reversefn_linked_list (struct llNode **head, int n)
 
 void test (struct llNode *head, char input[][MAX_LENGTH], int dim)
 {
-    // Si assume che n sia pari.
+    // Si assume che dim sia pari.
 
     for (int i = 0; i < dim; i++)
-    {
-        //printf ("%s\n", input[i]);
+    
         push_node(&head, create_node (input[i]));
-    }
+        
+    
     printf ("Linked List inserita:\n");
     print_linked_list (head);
 
