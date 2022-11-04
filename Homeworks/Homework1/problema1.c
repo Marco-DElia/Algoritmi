@@ -1,6 +1,6 @@
 /*
-***************************PROBLEMA-1 HOMEWORK-1*******************
-                        EMANUELE D'AJELLO - MARCO D'ELIA
+***********************  **PROBLEMA-1 HOMEWORK-1*******************
+                   EMANUELE D'AJELLO - MARCO D'ELIA
 
     Soluzione:
                 - Linked List singolarmente linkata con insterimento in testa
@@ -145,6 +145,7 @@ void reversefn_linked_list (struct llNode **head, int n)
 
 }
 
+// La massima lunghezza di una stringa (solo per il test) è 32 bytes
 void test (struct llNode *head, char input[][MAX_LENGTH], int dim)
 {
     // Si assume che dim sia pari.
@@ -152,7 +153,7 @@ void test (struct llNode *head, char input[][MAX_LENGTH], int dim)
     for (int i = 0; i < dim; i++)
     
         push_node(&head, create_node (input[i]));
-        
+
     
     printf ("Linked List inserita:\n");
     print_linked_list (head);
@@ -173,7 +174,7 @@ int main ()
 {
 
     struct llNode *head = NULL;
-    //La massima lunghezza di una stringa (solo per il test) è 32 bytes
+
     char vector [][MAX_LENGTH] = {"alfa", "beta", "gamma", "delta", "zeta", "eta", "theta", "iota", "kappa", "lambda"};
     int n = 10;
     printf ("TEST:\n");
