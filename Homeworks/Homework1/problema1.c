@@ -160,7 +160,7 @@ void test (struct llNode *head, char input[][MAX_LENGTH], int dim)
 
     reversefn_linked_list (&head, dim/2);
 
-    printf ("Linked List invertita a metà:\n");
+    printf ("Linked List invertita a meta':\n");
     print_linked_list (head);
     printf ("\n");
 
@@ -174,27 +174,36 @@ int main ()
 {
 
     struct llNode *head = NULL;
-
-    char vector [][MAX_LENGTH] = {"alfa", "beta", "gamma", "delta", "zeta", "eta", "theta", "iota", "kappa", "lambda"};
-    int n = 10;
-    printf ("TEST:\n");
-    test (head, vector, n);
+    
+    char vector0 [][MAX_LENGTH] = {"alfa", "beta", "gamma", "delta", "zeta", "eta", "theta", "iota", "kappa", "lambda"};
+    int n0 = 10;
+    // Risultato atteso: lambda  kappa  iota  theta  eta  alfa  beta  gamma  delta  zeta
+    // Dimensione 10, invesione dalla 6a stringa in poi.
+    printf ("TEST0:\n");
+    test (head, vector0, n0);
 
 
     char vector1 [][MAX_LENGTH] = {"8888", "7777", "6666", "5555", "4444", "3333", "2222", "1111"};
     int n1 = 8;
+    // Risultato atteso: 1111  2222  3333  4444  8888  7777  6666  5555
+    // Dimensione 8, invesione dalla 5a stringa in poi.
     printf ("TEST 1:\n");
     test (head, vector1, n1);
 
 
     char vector2 [][MAX_LENGTH] = {};
     int n2 = 0;
+    //Risultato atteso: Nulla
+    // Dimensione nulla
     printf ("TEST 2:\n");
     test (head, vector2, n2);
 
 
     char vector3 [][MAX_LENGTH] = {"2222", "1111"};
     int n3 = 2;
+    // Risultato atteso: 1111  2222
+    // Dimensione 2, invesione dalla prima stringa in poi.
+    // Quindi nessuna inversione.
     printf ("TEST 3:\n");
     test (head, vector3, n3);
     
