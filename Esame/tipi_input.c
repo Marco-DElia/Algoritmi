@@ -92,3 +92,38 @@ int main ()
 
     }
 }
+
+//Input senza il numero di matrici che si stanno per leggere (ALTRO MODO)
+/*
+3 2
+2 5
+4 1
+3 1
+4 4
+1 2 3 4
+1 2 3 4
+4 5 6 7
+5 4 2 1
+*/
+int main ()
+{
+    int matrix[MAX];
+    int m = 0, n = 0;
+    char buffer[64];
+
+    while (fgets (buffer, 32, stdin) && buffer[0] != '\n')
+    {
+        sscanf (buffer, "%d %d", &m, &n);
+
+        for (int i = 0; i < m; i++)
+        {
+            for (int j = 0; j < n; j++)
+            {
+                scanf ("%d", &matrix[i*n + j]);
+            }
+        }
+        char waste = fgetc (stdin);
+        mprint (matrix, m, n);
+
+    }
+}
