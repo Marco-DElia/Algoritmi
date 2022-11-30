@@ -104,7 +104,7 @@ int main ()
 1 2 3 4
 4 5 6 7
 5 4 2 1
-*/
+
 int main ()
 {
     int matrix[MAX];
@@ -126,4 +126,51 @@ int main ()
         mprint (matrix, m, n);
 
     }
+}
+*/
+
+/*
+2
+40 40
+80
+
+
+5
+10 2 6 8 4
+10
+Input con una serie di \n in mezzo e con carattere terminatore EOF*/
+int main ()
+{
+    int books[100];
+    int n = 0;
+    int cash = 0;
+    int b1, b2;
+    //solve (books, 5, 10, &b1, &b2);
+    //printf ("%d %d\n", b1, b2);
+
+    char buff[64];
+
+    while (1)
+    {
+        while (fgets (buff, 24, stdin) && buff[0] == '\n');
+        
+        if (buff[0] == 'O') break;
+
+        sscanf (buff, "%d", &n);
+        //printf ("DIMENSIONE %d\n", n);
+
+        for (int i = 0; i < n; i++)
+        {
+            scanf ("%d\n", &books[i]);
+        }
+        scanf ("%d", &cash);
+        
+        for (int i = 0; i < n; i++)
+            printf ("%d ", books[i]);
+
+        printf ("\n");
+    }
+
+
+    return 0;
 }
