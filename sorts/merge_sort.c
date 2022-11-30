@@ -37,7 +37,7 @@ int join (int v[], int l, int m, int r)
         {
             v[l + i + j] = vr[j];
             nswap += m - l + 1 - i;
-            printf ("NSWAAP: %d\n", nswap);
+            //printf ("NSWAAP: %d\n", nswap);
 
             j++;
         }
@@ -64,14 +64,14 @@ int merge_sort (int v[], int l, int r)
     {
         int m = (l + r) / 2;
         nswap += merge_sort (v, l, m);
-        vprint (v, m - l + 1);
+        //vprint (v, m - l + 1);
         
         nswap += merge_sort (v, m + 1, r);
-        vprint (v, r - m);
+        //vprint (v, r - m);
 
         nswap += join (v, l, m, r);
     }
-    printf ("%d\n", nswap);
+    //printf ("%d\n", nswap);
     return nswap;
 }
 
