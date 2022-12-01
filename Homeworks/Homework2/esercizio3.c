@@ -13,10 +13,15 @@
        1 1 1 1 0 0 0  -- tooth_saw_matrix(...)--->>> 0 0 0 0 1 2 3
        0 0 0 0 1 0 0                                 1 2 3 4 0 1 2
 
+       Su ogni riga della matrice di partenza, si effettua il conteggio degli zeri
+       consecutivi, si azzera il conteggio appena si trova un uno.
+
     2) Per ogni colonna della matrice calcolata in precedenza, si applica un algoritmo
        per la ricerca del maggior 'rettangolo' inscritto in una rappresentazione
-       grafica della colonna. Si ritorna come valore massimo, la massima area tra
-       le aree dei rettangoli incritti nelle singole colonne.
+       grafica della colonna (come mostrato nell'esempio).
+       Il risultato restituito, come elaborazione della matrice derivata (a dente di sega),
+       è l' 'area' del più grande 'rettangolo' che è possibile inscrivere tra tutte le
+       colonne della matrice.
 
        Esempio:
        Per la colonna 6 della matrice calcolata, si ha
@@ -27,6 +32,10 @@
                0|  |  |  |________
                 |---------------------->
                  0  1  2  3  4        index
+
+        Il risultato così calcolato, è proprio l'area della più grande matrice di zeri.
+
+        La complessità dell'algoritmo, su una matrice m*n, nel suo complesso, è O(m*n).
 */
 
 #include <stdio.h>
@@ -44,6 +53,9 @@ void mprint (int* matrix, int m, int n)
     }
 }
 
+// Calcolo della matrice di conteggio degli zeri consecutivi.
+// Il funzionamento è descritto nel passo 1, visto in precedenza.
+// Complessità di calcolo: O(m*n)
 void tooth_saw_matrix (int *matrix, int *newmatrix, int m, int n)
 {
     for (int i = 0; i < m; i++)
@@ -60,10 +72,22 @@ void tooth_saw_matrix (int *matrix, int *newmatrix, int m, int n)
     }
 }
 
+// Calcolo dell'area massima.
+// Complessità di calcolo O(m*n)
+// Spiegazione dell'algoritmo:
+// L'algoritmo ha come obiettivo quello di calcolare
+// il valore dell'area del più grande rettangolo 
+// che è possibile inscrivere in una determinata colonna
+// di una data matrice. Questo calcolo, di complessità
+// O(n) viene eseguito tante volte quante sono le colonne,
+// quindi m volte. Il risultato ritornato è il massimo tra
+// questi m risultati. La complessità quindi è O(m*n)
 int maxsub (int *newmatrix, int m, int n)
 {
     int max_area = 0, area = 0, tos = 0, stack_size = 0, i = 0;
 
+    // Stack che mantiene gli indici utilizzati per calcolare
+    // successivamente le aree
     int *stack = malloc (sizeof (int) * m);
 
     if (stack == NULL)
@@ -72,6 +96,7 @@ int maxsub (int *newmatrix, int m, int n)
         return -1;
     }
 
+    // Esecuzione per ogni colonna
     for (int j = 0; j < n; j++)
     {
         i = 0;
@@ -79,34 +104,34 @@ int maxsub (int *newmatrix, int m, int n)
         tos = 0;
         stack_size = 0;
 
+        // Esecuzione sulla colonna
         while (i < m)
-        {
+        {   // Aggiungo elemento allo stack se questo è minore della testa,
+            // oppure se lo stack è vuoto. Altrimenti rimuovo la testa dello stack
             if (stack_size == 0 || newmatrix[n*stack[stack_size - 1] + j] <= newmatrix[n*i + j])
             {
                 stack[stack_size] = i;
 
                 stack_size++;
                 i++;
-
-                //printf ("PUSH -> tos: %d, newmatrix[tos]: %d, newmatrix: %d\n", stack[stack_size - 1], newmatrix[n*stack[stack_size - 1] + j], newmatrix[n*(i-1) + j]);
             }
             else
             {
+                // Rimuovo dalla testa dello stack.
                 tos = stack[stack_size - 1];
                 stack_size--;
 
-                //printf ("POP -> tos: %d, newmatrix:%d\n", tos, newmatrix[n*tos + j]);
+                // Calcola dell'area
                 area = newmatrix[n*tos + j] * (stack_size == 0 ? i : i - stack[stack_size - 1] - 1);
-                //printf ("area: %d\n", area);
             }
 
             if (area > max_area) max_area = area;
         }
-        //printf ("\nfine prima colonna !!!!\n");
 
+        // Nel caso in cui lo stack non sia vuoto rimuovo la testa dello stack e calcolo l'area,
+        // fino a quando lo stack non è vuoto.
         while (stack_size != 0)
         {
-            //printf ("stack[stack_size - 1] = %d\n", stack[stack_size - 1]);
             tos = stack[stack_size - 1];
             stack_size--;
             area = newmatrix[n*tos + j] * (stack_size == 0 ? i : i - stack[stack_size - 1] - 1);
@@ -118,7 +143,7 @@ int maxsub (int *newmatrix, int m, int n)
     return max_area;
 }
 
-
+// Funzione che coordina l'esecuzione
 int exec (int *matrix, int m, int n)
 {
     int *newmatrix = malloc (sizeof (int) * (m) * (n));
@@ -142,6 +167,7 @@ int main ()
 {
 /*
 Copiare ed incollare nel terminale per effettuare il testing: 5 casi di test forninti.
+Numero di input, numero di righe e colonne, e matrice.
 5
 6 8
 1 0 0 1 1 0 1 0 
@@ -187,7 +213,7 @@ Copiare ed incollare nel terminale per effettuare il testing: 5 casi di test for
     int *matrix = NULL;
     int m = 0, n = 0, T = 0;
 
-
+    // Numero dei casi di test
     scanf ("%d", &T);
 
     while (T--)
@@ -209,6 +235,7 @@ Copiare ed incollare nel terminale per effettuare il testing: 5 casi di test for
                 scanf ("%d", &matrix[i*n + j]);
             }
         }
+        // Calcolo risultato
         printf ("RISULTATO: %d\n", exec (matrix, m, n));
 
     }
